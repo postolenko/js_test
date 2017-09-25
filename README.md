@@ -1,0 +1,1 @@
+# http://postolenko.github.io/js_test/payment.html

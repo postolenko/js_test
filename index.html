@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+	<meta charset="utf-8">
+	
+	<title>JS</title>
+	
+
+</head>
+
+<body>
+
+	<style>
+
+		.percents {
+			display: inline-block;
+			vertical-align: baseline;
+			font-size: 15px;
+			line-height: 20px;
+			padding: 0 0 0 13px;
+		}
+
+		#restart_btn {
+			display: none;
+		}
+
+	</style>
+
+
+<form>
+	<div class="questions-block">
+
+		<h3>Какой язык вы предпочитаете ?</h3>
+
+		<div>
+			<input type="radio" name="question_1"  id="1_1"/>
+			<label for="1_1">JavaScript</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_1"  id="1_2"/>
+			<label for="1_2">HTML/CSS</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_1"  id="1_3"/>
+			<label for="1_3">PHP</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_1"  id="1_4"/>
+			<label for="1_4">C++</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_1"  id="1_5"/>
+			<label for="1_5">Русский</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<label>Свой ответ:</label>
+			<input type="text" name="question_1" id="1_6" />
+			<div class="percents"></div>
+		</div>
+
+	</div>
+
+	<div class="questions-block">
+
+		<h3>Какой редактор кода используете?</h3>
+
+		<div>
+			<input type="radio" name="question_2"  id="2_1"/>
+			<label for="2_1">Notepad++</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_2"  id="2_2"/>
+			<label for="2_2">Блокнот</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_2"  id="2_3"/>
+			<label for="2_3">Sublime Text</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<label>Свой ответ:</label>
+			<input type="text" name="question_2" id="2_4"/>
+			<div class="percents"></div>
+		</div>
+
+	</div>
+
+	<div class="questions-block">
+
+		<h3>Какой у вас опыт?</h3>
+
+		<div>
+			<input type="radio" name="question_3"  id="3_1"/>
+			<label for="3_1">6 месяцев</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_3"  id="3_2"/>
+			<label for="3_2">Около года</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_3"  id="3_3"/>
+			<label for="3_3">Пара лет</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<input type="radio" name="question_3"  id="3_4"/>
+			<label for="3_4">Пол жизни</label>
+			<div class="percents"></div>
+		</div>
+		<div>
+			<label>Свой ответ:</label>
+			<input type="text" name="question_3" id="3_5"/>
+			<div class="percents"></div>
+		</div>
+
+	</div>
+
+	<br />
+
+	<button type="button" id="send_btn" onclick="getInputsVal()">Проверить</button>
+
+	<button type="button" id="restart_btn" onclick="restartTest()">Пройти опрос еще раз</button>
+
+</form>
+
+
+<script type="text/javascript">
+
+var questions = document.getElementsByClassName("questions-block");
+var inputs;
+var index;
+var inputIndex;
+var checkedIndex;
+var resultsArr = new Array;
+var totalResultsArr = new Array;
+var sumArr = new Array;
+var percentArr = new Array;
+
+for(index = 0; index <= questions.length - 1; index++ ) {
+
+	inputs = questions[index].querySelectorAll("input");
+
+	totalResultsArr[index] = [];
+
+}
+
+function getInputsVal() {
+
+	document.getElementById("restart_btn").style.display = "none";
+	document.getElementById("send_btn").style.display = "block";
+
+	for(index = 0; index <= questions.length - 1; index++ ) {
+
+		inputs = questions[index].querySelectorAll("input");
+
+		resultsArr[index] = [];
+
+		for(inputIndex = 0; inputIndex <= inputs.length - 1 ; inputIndex++) {			
+
+			if(inputs[inputIndex].getAttribute("type") == "text" && inputs[inputIndex].value != "" ) {
+
+				for(checkedIndex = 0; checkedIndex <= inputs.length - 1 ; checkedIndex++) {
+
+					if(inputs[checkedIndex].getAttribute("type") == "radio" && inputs[checkedIndex].checked == true ) {
+
+						inputs[checkedIndex].checked = false;
+
+					}
+
+				}
+
+			}
+
+		}
+
+		for(inputIndex = 0; inputIndex <= inputs.length - 1 ; inputIndex++) {
+
+			if(inputs[inputIndex].getAttribute("type") == "text" && inputs[inputIndex].value != false ) {
+
+				resultsArr[index][inputIndex] = 1;
+
+			} else if(inputs[inputIndex].checked ){
+
+				resultsArr[index][inputIndex] = 1;
+
+			} else {
+
+				resultsArr[index][inputIndex] = 0;
+
+			}
+
+		}
+
+	}
+
+	for(index = 0; index <= questions.length - 1; index++ ) {
+
+		inputs = questions[index].querySelectorAll("input");
+
+		for(inputIndex = 0; inputIndex <= inputs.length - 1 ; inputIndex++) {
+
+			if(!totalResultsArr[index][inputIndex]) {
+
+				totalResultsArr[index][inputIndex] = 0;
+
+			}
+
+			totalResultsArr[index][inputIndex] += resultsArr[index][inputIndex];
+
+		}
+
+	}
+
+
+	for(index = 0; index <= questions.length - 1; index++ ) {
+
+		inputs = questions[index].querySelectorAll("input");
+
+		sumArr[index] = [];
+
+		for(inputIndex = 0; inputIndex <= inputs.length - 1 ; inputIndex++) {
+
+			if( sumArr[index] == false ) {
+
+				sumArr[index] = 0;
+
+			}
+
+			sumArr[index] = parseInt(sumArr[index]) + parseInt(totalResultsArr[index][inputIndex]);
+
+		}
+
+	}
+
+	for(index = 0; index <= questions.length - 1; index++ ) {
+
+		inputs = questions[index].querySelectorAll("input");
+
+		if( percentArr[index] == false ) {
+			percentArr[index] = 0;
+		}
+
+		percentArr[index] = 100 / sumArr[index];
+
+		for(inputIndex = 0; inputIndex <= inputs.length - 1 ; inputIndex++) {
+
+			if(totalResultsArr[index][inputIndex] != false) {
+
+				questions[index].getElementsByClassName("percents")[inputIndex].innerHTML = parseInt(totalResultsArr[index][inputIndex] * percentArr[index]) + "%";
+
+			}
+
+		}
+
+	}
+
+	document.getElementById("restart_btn").style.display = "block";
+	document.getElementById("send_btn").style.display = "none";
+
+
+}
+
+
+
+function restartTest() {
+
+	for(index = 0; index <= questions.length - 1; index++ ) {
+
+		inputs = questions[index].querySelectorAll("input");
+
+		for(inputIndex = 0; inputIndex <= inputs.length - 1 ; inputIndex++) {
+
+			if(inputs[inputIndex].getAttribute("type") == "text" && inputs[inputIndex].value != "" ) {
+
+				inputs[inputIndex].value = "";
+
+			} else if ( questions[index].querySelectorAll("input")[inputIndex].checked != false ){
+
+				questions[index].querySelectorAll("input")[inputIndex].checked = false;
+
+			}
+
+			if( questions[index].getElementsByClassName("percents")[inputIndex] ) {
+
+				questions[index].getElementsByClassName("percents")[inputIndex].innerHTML = "";
+
+			}
+
+		}
+
+	}
+
+	document.getElementById("restart_btn").style.display = "none";
+	document.getElementById("send_btn").style.display = "block";
+
+}
+
+
+</script>
+
+</body>
+</html>
