@@ -1,1 +1,1 @@
-# http://postolenko.github.io/js_test/payment.html
+# http://postolenko.github.io/js_test/index.html
